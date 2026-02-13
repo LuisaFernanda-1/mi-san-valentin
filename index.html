@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>💕 Mensaje de San Valentín</title>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #ff69b4;
+            --secondary: #ff1493;
+            --accent: #ff85c0;
+            --bg-start: #ffe4e1;
+            --bg-end: #ffc0cb;
+            --text-dark: #8b2252;
+            --white: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Quicksand', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, var(--bg-start) 0%, var(--bg-end) 100%);
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Corazones flotantes de fondo */
+        .floating-hearts {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .heart {
+            position: absolute;
+            font-size: 20px;
+            opacity: 0;
+            animation: float 8s infinite ease-in-out;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.6;
+            }
+            90% {
+                opacity: 0.6;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Contenedor principal */
+        .container {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            padding: 3rem;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 30px;
+            box-shadow: 0 20px 60px rgba(255, 105, 180, 0.3);
+            max-width: 500px;
+            width: 90%;
+            backdrop-filter: blur(10px);
+            animation: slideIn 0.8s ease-out;
+            display: none;
+        }
+
+        .container.show {
+            display: flex;
+            flex-direction: column;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-50px) scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .header {
+            margin-bottom: 2rem;
+        }
+
+        .title {
+            font-family: 'Pacifico', cursive;
+            font-size: 2.5rem;
+            color: var(--secondary);
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(255, 105, 180, 0.2);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        .from-to {
+            font-size: 1.2rem;
+            color: var(--text-dark);
+            margin: 1rem 0;
+            font-weight: 600;
+        }
+
+        .question {
+            font-size: 1.8rem;
+            color: var(--text-dark);
+            margin: 2rem 0;
+            font-weight: 600;
+            line-height: 1.4;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 2rem;
+            position: relative;
+            min-height: 60px;
+        }
+
+        .buttons-vertical {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            align-items: center;
+            margin-top: 2rem;
+            position: relative;
+            min-height: 180px;
+        }
+
+        .screen {
+            display: none;
+        }
+
+        .screen.active {
+            display: block;
+        }
+
+        /* Pantallas 1 y 2 a pantalla completa */
+        #screen1, #screen2 {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: linear-gradient(135deg, var(--bg-start) 0%, var(--bg-end) 100%);
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        #screen1.active, #screen2.active {
+            display: flex;
+        }
+
+        #screen1 .header, #screen2 .header {
+            margin-bottom: 3rem;
+        }
+
+        #screen1 .title, #screen2 .title {
+            font-size: 3.5rem;
+            margin-bottom: 2rem;
+            text-shadow: 3px 3px 6px rgba(255, 105, 180, 0.3);
+        }
+
+        #screen1 .from-to, #screen2 .from-to {
+            font-size: 1.4rem;
+        }
+
+        #screen1 .question, #screen2 .question {
+            font-size: 2.2rem;
+            margin: 3rem 0;
+            max-width: 700px;
+        }
+
+        #screen1 .btn, #screen2 .btn {
+            font-size: 1.4rem;
+            padding: 1.5rem 3.5rem;
+        }
+
+        .btn {
+            padding: 1rem 2.5rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: 'Quicksand', sans-serif;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-yes {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: var(--white);
+            animation: heartbeat 1.5s ease-in-out infinite;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% {
+                transform: scale(1);
+            }
+            10%, 30% {
+                transform: scale(1.1);
+            }
+            20%, 40% {
+                transform: scale(1);
+            }
+        }
+
+        .btn-yes:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(255, 20, 147, 0.4);
+        }
+
+        .btn-no {
+            background: var(--white);
+            color: var(--text-dark);
+            border: 2px solid var(--primary);
+            transition: all 0.2s ease;
+            width: 200px;
+        }
+
+        .btn-no:hover {
+            background: #fff0f5;
+        }
+
+        .btn-no.moving {
+            position: absolute;
+        }
+
+        /* Pantalla de aceptación */
+        .acceptance {
+            display: none;
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .acceptance.active {
+            display: block;
+        }
+
+        .big-heart {
+            font-size: 5rem;
+            margin: 1rem 0;
+            animation: heartBeat 1s ease-in-out infinite;
+        }
+
+        @keyframes heartBeat {
+            0%, 100% {
+                transform: scale(1);
+            }
+            25%, 75% {
+                transform: scale(1.2);
+            }
+            50% {
+                transform: scale(1);
+            }
+        }
+
+        .message {
+            font-size: 1.3rem;
+            color: var(--text-dark);
+            line-height: 1.6;
+            margin: 1.5rem 0;
+            font-weight: 400;
+        }
+
+        .love-message {
+            font-family: 'Pacifico', cursive;
+            font-size: 2rem;
+            color: var(--secondary);
+            margin-top: 1.5rem;
+            animation: float-text 3s ease-in-out infinite;
+        }
+
+        @keyframes float-text {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        /* Confeti de corazones */
+        .confetti-hearts {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 100;
+        }
+
+        .confetti-heart {
+            position: absolute;
+            font-size: 30px;
+            animation: fall 4s linear forwards;
+        }
+
+        @keyframes fall {
+            0% {
+                transform: translateY(-100px) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Footer */
+        .footer {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1001;
+            text-align: center;
+            font-size: 0.9rem;
+            color: var(--text-dark);
+            font-weight: 500;
+            opacity: 0.8;
+            text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.8);
+        }
+
+        .footer span {
+            font-weight: 600;
+            color: var(--secondary);
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .container {
+                padding: 2rem;
+            }
+
+            .title {
+                font-size: 2rem;
+            }
+
+            .question {
+                font-size: 1.4rem;
+            }
+
+            .btn {
+                padding: 0.8rem 1.8rem;
+                font-size: 1rem;
+            }
+
+            #screen1 .title, #screen2 .title {
+                font-size: 2.5rem;
+            }
+
+            #screen1 .question, #screen2 .question {
+                font-size: 1.6rem;
+                margin: 2rem 0;
+            }
+
+            #screen1 .btn, #screen2 .btn {
+                font-size: 1.1rem;
+                padding: 1.2rem 2.5rem;
+            }
+
+            .footer {
+                font-size: 0.75rem;
+                bottom: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Corazones flotantes de fondo -->
+    <div class="floating-hearts" id="floatingHearts"></div>
+
+    <!-- Pantalla 1: Pregunta inicial (pantalla completa) -->
+    <div id="screen1" class="screen active">
+        <div class="header">
+            <div class="title">💌 Tienes un mensaje 💌</div>
+            <div class="from-to">
+                De: <span id="fromName">Fernandukis</span><br>
+                Para: <span id="toName">La mujer más increíble, maravillosa y preciosa de todo el universo</span>
+            </div>
+        </div>
+        
+        <div class="question">
+            Esta es una pregunta importante... 💭
+        </div>
+
+        <div class="buttons">
+            <button class="btn btn-yes" onclick="goToScreen2()">Haz clic si quieres saber qué es 💕</button>
+        </div>
+    </div>
+
+    <!-- Pantalla 2: Chismosa (pantalla completa) -->
+    <div id="screen2" class="screen">
+        <div class="header">
+            <div class="title">😏 ¡Ahhh! 😏</div>
+        </div>
+        
+        <div class="question">
+            Estás de chismosa, ¿verdad? 😄<br>
+            Pero está bien... me gusta eso de ti 💕
+        </div>
+
+        <div class="buttons">
+            <button class="btn btn-yes" onclick="goToScreen3()">Dale clic si de verdad quieres saber 👀</button>
+        </div>
+    </div>
+
+    <!-- Contenedor principal -->
+    <div class="container">
+        <!-- Pantalla 3: La pregunta real -->
+        <div id="screen3" class="screen">
+            <div class="header">
+                <div class="title">💕 San Valentín 💕</div>
+                <div class="from-to">
+                    De: <span id="fromName2">Fernandukis</span><br>
+                    Para: <span id="toName2">La mujer más increíble, maravillosa y preciosa de todo el universo</span>
+                </div>
+            </div>
+            
+            <div class="question" id="questionText">
+                Para mi reina hermosa, me gustaría preguntarte...<br>
+                ¿Quieres ser mi San Valentín? 💖
+            </div>
+
+            <div class="buttons-vertical">
+                <button class="btn btn-yes" onclick="acceptProposal()">¡SÍ! 💕</button>
+                <button class="btn btn-no" id="noBtn" onmouseover="moveButton()" onclick="moveButton()">No</button>
+            </div>
+        </div>
+
+        <!-- Pantalla 4: Aceptación -->
+        <div class="acceptance" id="acceptanceScreen">
+            <div class="big-heart">💖</div>
+            <div class="message">
+                Gracias por querer pasar este tiempo a mi lado...<br><br>
+                Eres la mujer más hermosa que existe,<br>
+                y para mí sería un honor compartir<br>
+                estas fechas tan especiales contigo.<br><br>
+                Cada momento a tu lado es un regalo<br>
+                que atesoro en mi corazón.
+            </div>
+            <div class="love-message">
+                Te amo con toda el alma 💚
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <span>By Create Fernandukis</span> 💕
+    </div>
+
+    <!-- Confeti de corazones -->
+    <div class="confetti-hearts" id="confettiHearts"></div>
+
+    <script>
+        // Navegar entre pantallas
+        function goToScreen2() {
+            document.getElementById('screen1').classList.remove('active');
+            document.getElementById('screen2').classList.add('active');
+        }
+
+        function goToScreen3() {
+            document.getElementById('screen2').classList.remove('active');
+            // Mostrar el contenedor principal
+            const container = document.querySelector('.container');
+            container.style.display = 'flex';
+            setTimeout(() => {
+                document.getElementById('screen3').classList.add('active');
+            }, 100);
+        }
+
+        // Crear corazones flotantes de fondo
+        function createFloatingHearts() {
+            const container = document.getElementById('floatingHearts');
+            const hearts = ['💕', '💖', '💗', '💝', '💞', '💓'];
+            
+            for (let i = 0; i < 15; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'heart';
+                heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+                heart.style.left = Math.random() * 100 + '%';
+                heart.style.animationDelay = Math.random() * 8 + 's';
+                heart.style.animationDuration = (Math.random() * 4 + 6) + 's';
+                container.appendChild(heart);
+            }
+        }
+
+        // Mover botón NO
+        function moveButton() {
+            const btn = document.getElementById('noBtn');
+            const container = document.querySelector('.buttons-vertical');
+            
+            // Agregar clase para hacerlo absoluto
+            btn.classList.add('moving');
+            
+            const containerRect = container.getBoundingClientRect();
+            const btnRect = btn.getBoundingClientRect();
+            
+            const maxX = containerRect.width - btnRect.width;
+            const maxY = containerRect.height - btnRect.height;
+            
+            const randomX = Math.random() * maxX - (maxX / 2);
+            const randomY = Math.random() * maxY - (maxY / 2);
+            
+            btn.style.left = randomX + 'px';
+            btn.style.top = randomY + 'px';
+        }
+
+        // Aceptar propuesta
+        function acceptProposal() {
+            document.getElementById('screen3').style.display = 'none';
+            document.getElementById('acceptanceScreen').classList.add('active');
+            
+            createConfetti();
+        }
+
+        // Crear confeti de corazones
+        function createConfetti() {
+            const container = document.getElementById('confettiHearts');
+            const hearts = ['💕', '💖', '💗', '💝', '💞', '💓'];
+            
+            for (let i = 0; i < 50; i++) {
+                setTimeout(() => {
+                    const heart = document.createElement('div');
+                    heart.className = 'confetti-heart';
+                    heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+                    heart.style.left = Math.random() * 100 + '%';
+                    heart.style.animationDelay = '0s';
+                    heart.style.animationDuration = (Math.random() * 2 + 3) + 's';
+                    container.appendChild(heart);
+                    
+                    setTimeout(() => heart.remove(), 5000);
+                }, i * 100);
+            }
+        }
+
+        // Inicializar
+        createFloatingHearts();
+    </script>
+</body>
+</html>
