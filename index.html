@@ -29,7 +29,7 @@
             justify-content: center;
             align-items: center;
             background: linear-gradient(135deg, var(--bg-start) 0%, var(--bg-end) 100%);
-            overflow: hidden;
+            overflow-x: hidden;
             position: relative;
         }
 
@@ -42,6 +42,7 @@
             height: 100%;
             pointer-events: none;
             z-index: 1;
+            overflow: hidden;
         }
 
         .heart {
@@ -73,15 +74,18 @@
             position: relative;
             z-index: 10;
             text-align: center;
-            padding: 3rem;
+            padding: 2rem;
             background: rgba(255, 255, 255, 0.95);
             border-radius: 30px;
             box-shadow: 0 20px 60px rgba(255, 105, 180, 0.3);
             max-width: 500px;
             width: 90%;
+            max-height: 85vh;
+            overflow-y: auto;
             backdrop-filter: blur(10px);
             animation: slideIn 0.8s ease-out;
             display: none;
+            margin: 1rem;
         }
 
         .container.show {
@@ -101,12 +105,12 @@
         }
 
         .header {
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
         }
 
         .title {
             font-family: 'Pacifico', cursive;
-            font-size: 2.5rem;
+            font-size: 2rem;
             color: var(--secondary);
             margin-bottom: 0.5rem;
             text-shadow: 2px 2px 4px rgba(255, 105, 180, 0.2);
@@ -123,16 +127,17 @@
         }
 
         .from-to {
-            font-size: 1.2rem;
+            font-size: 1rem;
             color: var(--text-dark);
             margin: 1rem 0;
             font-weight: 600;
+            line-height: 1.4;
         }
 
         .question {
-            font-size: 1.8rem;
+            font-size: 1.4rem;
             color: var(--text-dark);
-            margin: 2rem 0;
+            margin: 1.5rem 0;
             font-weight: 600;
             line-height: 1.4;
         }
@@ -141,7 +146,7 @@
             display: flex;
             gap: 1rem;
             justify-content: center;
-            margin-top: 2rem;
+            margin-top: 1.5rem;
             position: relative;
             min-height: 60px;
         }
@@ -149,11 +154,11 @@
         .buttons-vertical {
             display: flex;
             flex-direction: column;
-            gap: 1.5rem;
+            gap: 1rem;
             align-items: center;
-            margin-top: 2rem;
+            margin-top: 1.5rem;
             position: relative;
-            min-height: 180px;
+            min-height: 150px;
         }
 
         .screen {
@@ -179,6 +184,7 @@
             z-index: 1000;
             padding: 2rem;
             text-align: center;
+            overflow-y: auto;
         }
 
         #screen1.active, #screen2.active {
@@ -186,35 +192,38 @@
         }
 
         #screen1 .header, #screen2 .header {
-            margin-bottom: 3rem;
+            margin-bottom: 2rem;
         }
 
         #screen1 .title, #screen2 .title {
-            font-size: 3.5rem;
-            margin-bottom: 2rem;
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
             text-shadow: 3px 3px 6px rgba(255, 105, 180, 0.3);
         }
 
         #screen1 .from-to, #screen2 .from-to {
-            font-size: 1.4rem;
+            font-size: 1.1rem;
+            line-height: 1.5;
+            max-width: 90%;
+            margin: 0 auto;
         }
 
         #screen1 .question, #screen2 .question {
-            font-size: 2.2rem;
-            margin: 3rem 0;
-            max-width: 700px;
+            font-size: 1.6rem;
+            margin: 2rem 0;
+            max-width: 90%;
         }
 
         #screen1 .btn, #screen2 .btn {
-            font-size: 1.4rem;
-            padding: 1.5rem 3.5rem;
+            font-size: 1.1rem;
+            padding: 1rem 2rem;
         }
 
         .btn {
-            padding: 1rem 2.5rem;
+            padding: 0.9rem 2rem;
             border: none;
             border-radius: 50px;
-            font-size: 1.2rem;
+            font-size: 1rem;
             font-weight: 600;
             cursor: pointer;
             font-family: 'Quicksand', sans-serif;
@@ -250,7 +259,7 @@
             color: var(--text-dark);
             border: 2px solid var(--primary);
             transition: all 0.2s ease;
-            width: 200px;
+            width: 180px;
         }
 
         .btn-no:hover {
@@ -283,7 +292,7 @@
         }
 
         .big-heart {
-            font-size: 5rem;
+            font-size: 4rem;
             margin: 1rem 0;
             animation: heartBeat 1s ease-in-out infinite;
         }
@@ -301,7 +310,7 @@
         }
 
         .message {
-            font-size: 1.3rem;
+            font-size: 1.1rem;
             color: var(--text-dark);
             line-height: 1.6;
             margin: 1.5rem 0;
@@ -310,7 +319,7 @@
 
         .love-message {
             font-family: 'Pacifico', cursive;
-            font-size: 2rem;
+            font-size: 1.6rem;
             color: var(--secondary);
             margin-top: 1.5rem;
             animation: float-text 3s ease-in-out infinite;
@@ -334,11 +343,12 @@
             height: 100%;
             pointer-events: none;
             z-index: 100;
+            overflow: hidden;
         }
 
         .confetti-heart {
             position: absolute;
-            font-size: 30px;
+            font-size: 25px;
             animation: fall 4s linear forwards;
         }
 
@@ -356,16 +366,20 @@
         /* Footer */
         .footer {
             position: fixed;
-            bottom: 20px;
+            bottom: 10px;
             left: 50%;
             transform: translateX(-50%);
-            z-index: 1001;
+            z-index: 999;
             text-align: center;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             color: var(--text-dark);
             font-weight: 500;
-            opacity: 0.8;
+            opacity: 0.7;
             text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.8);
+            background: rgba(255, 255, 255, 0.5);
+            padding: 5px 15px;
+            border-radius: 15px;
+            backdrop-filter: blur(5px);
         }
 
         .footer span {
@@ -375,40 +389,110 @@
 
         /* Responsive */
         @media (max-width: 600px) {
+            body {
+                overflow-x: hidden;
+            }
+
             .container {
-                padding: 2rem;
+                padding: 1.5rem;
+                width: 95%;
+                max-height: 80vh;
+                margin: 0.5rem;
             }
 
             .title {
-                font-size: 2rem;
+                font-size: 1.6rem;
+            }
+
+            .from-to {
+                font-size: 0.9rem;
             }
 
             .question {
-                font-size: 1.4rem;
+                font-size: 1.2rem;
             }
 
             .btn {
-                padding: 0.8rem 1.8rem;
-                font-size: 1rem;
+                padding: 0.8rem 1.5rem;
+                font-size: 0.95rem;
+            }
+
+            .btn-no {
+                width: 150px;
             }
 
             #screen1 .title, #screen2 .title {
-                font-size: 2.5rem;
+                font-size: 2rem;
+            }
+
+            #screen1 .from-to, #screen2 .from-to {
+                font-size: 0.95rem;
             }
 
             #screen1 .question, #screen2 .question {
-                font-size: 1.6rem;
-                margin: 2rem 0;
+                font-size: 1.3rem;
+                margin: 1.5rem 0;
             }
 
             #screen1 .btn, #screen2 .btn {
-                font-size: 1.1rem;
-                padding: 1.2rem 2.5rem;
+                font-size: 1rem;
+                padding: 0.9rem 1.8rem;
             }
 
             .footer {
-                font-size: 0.75rem;
-                bottom: 10px;
+                font-size: 0.7rem;
+                bottom: 5px;
+                padding: 4px 12px;
+            }
+
+            .big-heart {
+                font-size: 3rem;
+            }
+
+            .message {
+                font-size: 1rem;
+            }
+
+            .love-message {
+                font-size: 1.4rem;
+            }
+
+            .heart {
+                font-size: 16px;
+            }
+
+            .confetti-heart {
+                font-size: 20px;
+            }
+
+            .buttons-vertical {
+                min-height: 120px;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .container {
+                padding: 1rem;
+            }
+
+            .title {
+                font-size: 1.4rem;
+            }
+
+            .from-to {
+                font-size: 0.85rem;
+            }
+
+            .question {
+                font-size: 1.1rem;
+            }
+
+            #screen1 .title, #screen2 .title {
+                font-size: 1.8rem;
+            }
+
+            #screen1 .question, #screen2 .question {
+                font-size: 1.2rem;
             }
         }
     </style>
@@ -494,7 +578,7 @@
 
     <!-- Footer -->
     <div class="footer">
-        <span>By Create Fernandukis</span> 💕
+        <span>Fernandukis</span> 💕
     </div>
 
     <!-- Confeti de corazones -->
